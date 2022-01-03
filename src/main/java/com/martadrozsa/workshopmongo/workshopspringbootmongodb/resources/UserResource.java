@@ -1,5 +1,6 @@
 package com.martadrozsa.workshopmongo.workshopspringbootmongodb.resources;
 
+import com.martadrozsa.workshopmongo.workshopspringbootmongodb.domain.Post;
 import com.martadrozsa.workshopmongo.workshopspringbootmongodb.domain.User;
 import com.martadrozsa.workshopmongo.workshopspringbootmongodb.dto.UserDTO;
 import com.martadrozsa.workshopmongo.workshopspringbootmongodb.service.UserService;
@@ -56,5 +57,11 @@ public class UserResource {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts (@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
